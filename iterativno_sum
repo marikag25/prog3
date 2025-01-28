@@ -1,0 +1,36 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+void segmentno_drvo(vector <int>& drvo, vector <int> &a, int n)
+{
+    for(int i=0; i<n; i++)
+    {
+        drvo[n+i]=a[i];
+    }
+    for (int i=n-1; i>=1; i--)
+    {
+        drvo[i]=drvo[2*i]+drvo[2*i+1];
+    }
+}
+int sum_query (vector <int>& drvo, int left, int right, int n)
+{
+    left+=n;
+    right+=n+1;
+    int sum=0;
+    while (left<right)
+    {
+        if (left & 1)
+        {
+            sum+=drvo[left];
+            left++;
+        }
+        if (right & 1)
+        {
+            right--;
+            sum+=drvo[right];
+        }
+        left/=2;
+        right/=2;
+    }
+    return sum;
+}
